@@ -1,5 +1,5 @@
-var agent   = require('./agent');
-var process = require('./process'); 
+var agent   = require('./agentDef/agent');
+var process = require('./agentDef/process'); 
 
 var agent1 = agent.create('Tony', process.models['rule-based']);
 var agent2 = agent.create('Candy', process.models['rule-based']);

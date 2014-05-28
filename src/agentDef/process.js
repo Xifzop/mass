@@ -6,7 +6,8 @@
 
 exports.models = {
 	// to be defined.
-	"foo" : function( fromID, msg ) {
-		// ... here this means agent.
+	"rule-based" : function( fromID, msg ) {
+		var hostAgent = this;
+		console.log(hostAgent._behaviors);
 	},
 };

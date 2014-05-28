@@ -1,5 +1,7 @@
 exports.behaviors = {
 	// for receiving messages
+	reply           : function( to, from, msgs ) { },
+	replyAll		: function( from, msgs ) { },
 	query     		: function( to, from, msgs ) { },
 	request   		: function( to, from, msgs ) { },
 	inform    		: function( to, from, msgs ) { },
