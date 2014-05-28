@@ -3,16 +3,17 @@
  *	Created by Xifzop.
  *	May 27, 2014
  */
-var redis   = require( 'redis' );
-var message = require( './message' ); 
+var redis    = require( 'redis' );
+var message  = require( './message' ); 
+var behavior = require( './behavior' ); 
 /*
  * Definition of single agent structure.
  */
 function Agent( Aname, process ) {
 	this._Aname     = Aname;
-	this._ID        = '?/' + this._Aname;
+	this._ID        = 'unknown/' + this._Aname;
 	this._states    = { };
-	this._behaviors = { };
+	this._behaviors = behavior.behaviors;
 	this._evHandler = { };
 	this._ears      = null;
 	this._mouth     = null;
@@ -33,15 +34,12 @@ Agent.prototype.activate = function( config ) {
 	this._ears  = redis.createClient( port, host );
 	this._mouth = redis.createClient( port, host );
 	
-	this._ears.on( "error", function(err) {
-		console.log("Err: " + err);
-	} );
 	this._ears.on( "pmessage", function( pattern, fromAID, msg ) {
-		alertMsg( fromID, msg );
-		process.call(self, fromID, msg);
-	} );
-	this._mouth = this._client.publish( this._ID, 
-										'Agent[' + this._Aname + '] channel published @ ' + host + ':' + port );
+			alertMsg( fromAID, msg );
+			//process.call(self, fromID, msg);
+			self._mouth.publish( self._ID, 'Agent!' );
+		} );
+	this._mouth.publish( this._ID, 'Channel published @ ' + host + ':' + port );
 
 };
 
@@ -70,6 +68,6 @@ Agent.prototype.unlistenTo = function( aid ) {
 	} else ; // do nothing if the input of agent is not initialize
 };
 
-exports.create = function( Aname ) {
-					return new Agent(Aname);
+exports.create = function( Aname, process ) {
+					return new Agent(Aname, process);
 				};
