@@ -4,10 +4,11 @@
  * May 27, 2014
  */
 
+var message = require( './message' );
+var util    = require( '../util' );
+var ruleBasedM = require( '../modelDef/rule-based' );
+
 exports.models = {
 	// to be defined.
-	"rule-based" : function( fromID, msg ) {
-		var hostAgent = this;
-		console.log(hostAgent._behaviors);
-	},
+	"rule-based" : ruleBasedM
 };

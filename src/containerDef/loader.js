@@ -2,9 +2,9 @@ var util = require( '../util' );
 var fs   = require( 'fs' );
 var path = require( 'path' );
 
-exports.loadAgentDef = function( fpath ) {
+exports.loadRoles = function( fpath ) {
 	var agentDefs = {};
-	var ext       = '.agent';
+	var ext       = '.role';
 	util.forEachFile( fpath, function( fname ) {
 		var aName = path.basename( fname, ext );
 		// fs.readFileSync( fname, 'utf8', function(err, content) { 
@@ -13,4 +13,9 @@ exports.loadAgentDef = function( fpath ) {
 		// } );
 		agentDefs[aName] = JSON.parse( fs.readFileSync( fname, 'utf8' ) );
 	} );
+	return agentDefs;
+};
+
+exports.loadConfig = function( cpath ) {
+	return JSON.parse( fs.readFileSync(cpath, 'utf8') );
 };
